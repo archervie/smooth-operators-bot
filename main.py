@@ -8,10 +8,33 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-logger = logging.Logger(__name__)
+COG_EXTS = []
+COG_PATH = Path("./cogs")
+
+logger = logging.getLogger(__name__)
 
 
-async def main() -> None:
+class SmoothOperators(commands.Bot):
+    def __init__(self) -> None:
+        super().__init__(command_prefix="!", intents=discord.Intents.all())
+
+    async def setup_hook(self) -> None:
+        for cog in COG_EXTS:
+            await self.load_extension(f"{COG_PATH}.{cog}")
+            logger.debug(f"Loaded extension: {cog}")
+        await self.tree.sync()
+        logger.info("Synced command tree")
+        return await super().setup_hook()
+
+    async def on_ready(self) -> None:
+        await self.change_presence(
+            activity=discord.Game(name="Searching for Lava Rocks")
+        )
+        logger.info("Switched status")
+        logger.info("Bot is fully running")
+
+
+def main() -> None:
     """
     Run the core bot.
     """
@@ -19,16 +42,17 @@ async def main() -> None:
     dotenv_path: Union[str, os.PathLike[str]] = Path(".env")
     load_dotenv(dotenv_path=dotenv_path)
 
-    intents = discord.Intents.default()
+    discord.utils.setup_logging(level=logging.INFO)
+    logger.setLevel(logging.DEBUG)
+    logging.getLogger("discord").setLevel(logging.INFO)
 
-    # This bot uses application commands, not prefix commands
-    bot = commands.Bot(command_prefix="!", intents=intents)
+    bot = SmoothOperators()
 
     try:
-        bot.run(token=os.environ["TOKEN"])
+        bot.run(token=os.environ["TOKEN"], log_handler=None)
     except Exception as e:
-        logger.error(f"An error has occurred :{e}")
+        logger.error(f"An error has occurred\n\n{e}")
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
