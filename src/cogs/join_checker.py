@@ -1,8 +1,8 @@
 import datetime
 import logging
-import os
 
 import discord
+from discord import app_commands
 from discord.ext import commands
 
 from core.base_cog import BaseCog
@@ -14,18 +14,23 @@ class JoinChecker(BaseCog):
         super().__init__(bot)
         self.bot = bot
 
+    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member) -> None:
-        await self.runner()
         logger.info(f"{member.name} has joined the server")
 
-        subscribers_role = discord.Object(os.environ["SUBSCRIBERS_ROLE_ID"])
+        subscribers_role = await self._get_subscribers_role()
+        staff_channel = await self._get_staff_channel()
         try:
             await member.add_roles(subscribers_role, reason="Joined the server.")
+            logger.info(f"Granted {member.name} the subscribers role")
         except discord.errors.Forbidden:
-            if isinstance(self.STAFF_CHANNEL, discord.TextChannel):
-                await self.STAFF_CHANNEL.send(
-                    f"Missing permissions for giving {member.name} role; please assign manually."
+            if isinstance(staff_channel, discord.TextChannel):
+                await staff_channel.send(
+                    f"Missing permissions for giving {member.name} subscriber role; please assign manually."
+                )
+                logger.error(
+                    f"Missing permissions for giving {member.name} subscriber role; please assign manually."
                 )
 
         create_time = member.created_at
@@ -38,6 +43,19 @@ class JoinChecker(BaseCog):
                 timeout_date,
                 reason=f"Account flagged, account is {time_difference.days} days old.",
             )
+            logger.info(f"Account flagged: {member.name}, account is {time_difference.days} days old.")
+            unverified_role = await self._get_unverified_role()
+            try:
+                await member.add_roles(unverified_role)
+                logger.info(f"Granted {member.name} the unverified role")
+            except discord.errors.Forbidden:
+                if isinstance(staff_channel, discord.TextChannel):
+                    await staff_channel.send(
+                        f"Missing permissions for giving {member.name} unverified role; please assign manually."
+                    )
+                    logger.error(
+                        f"Missing permissions for giving {member.name} unverified role; please assign manually."
+                    )
 
             try:
                 await member.send(
@@ -45,15 +63,31 @@ class JoinChecker(BaseCog):
                     f" your account was flagged for being only {time_difference.days} days old. If you believe"
                     " this was a mistake, please respond to this DM with the message 'jojodoss verify'. You will be untimed out afterwards."
                 )
+                logger.info(f"Successfully sent {member.name} verification DM")
 
             except discord.errors.Forbidden:
                 logger.error(f"Unable to dm {member.name}, falling back to default.")
 
-                if isinstance(self.STAFF_CHANNEL, discord.TextChannel):
-                    await self.STAFF_CHANNEL.send(
+                if isinstance(staff_channel, discord.TextChannel):
+                    await staff_channel.send(
                         f"Timed out **{member.name}** for having their account be {time_difference.days} days old, but was unable to DM them."
                         "Please keep this in mind, and act accordingly."
                     )
+
+    @app_commands.allowed_contexts(guilds=False, dms=True, private_channels=False)
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message) -> None:
+        if message.content == "jojodoss verify":
+            unverified_role = await self._get_unverified_role()
+            guild = await self._get_guild_obj()
+            member = guild.get_member(message.author.id)
+
+            if isinstance(member, discord.Member):
+                if member.timed_out_until is not None and unverified_role not in member.roles:
+                    await member.timeout(None)
+                    await member.remove_roles(unverified_role)
+                    await member.send("Thank you for verifying yourself! You have been untimed out.")
+                    logger.info(f"Verified {member.name}, and removed unverified role")
 
 
 async def setup(bot: commands.Bot) -> None:
