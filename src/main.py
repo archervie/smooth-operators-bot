@@ -7,7 +7,12 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-COG_EXTS = ["cogs.join_checker"]
+COG_EXTS = [
+    "cogs.autolog",
+    "cogs.join_checker",
+    "cogs.welcome"
+]
+
 DOTENV_PATH = Path(__file__).parent.parent / ".env"
 
 load_dotenv(dotenv_path=DOTENV_PATH)
@@ -15,24 +20,25 @@ load_dotenv(dotenv_path=DOTENV_PATH)
 class ColoredFormatter(logging.Formatter):
     """Custom logging formatter that adds ANSI color codes based on log level."""
 
-    GRAY = "\x1b[38;20m"
-    CYAN = "\x1b[36;20m"
-    GREEN = "\x1b[32;20m"
-    YELLOW = "\x1b[33;20m"
-    RED = "\x1b[31;20m"
-    RED_BOLD = "\x1b[31;1m"
-    RESET = "\x1b[0m"
-    BOLD = "\x1b[1m"
+    def __init__(self) -> None:
+        GRAY = "\x1b[38;20m"
+        CYAN = "\x1b[36;20m"
+        GREEN = "\x1b[32;20m"
+        YELLOW = "\x1b[33;20m"
+        RED = "\x1b[31;20m"
+        RED_BOLD = "\x1b[31;1m"
+        RESET = "\x1b[0m"
+        BOLD = "\x1b[1m"
 
-    DEFAULT_FMT = "[{asctime}] [{levelname:<8}] {name}: {message}"
+        self.DEFAULT_FMT = "{asctime} {levelname} {name}: {message}"
 
-    FORMATS = {
-        logging.DEBUG: BOLD + "[{asctime}] " + GRAY + "[{levelname}] " + RESET + "{name}: {message}" + RESET,
-        logging.INFO: BOLD + "[{asctime}] " + GREEN + "[{levelname}] " + RESET + "{name}: {message}" + RESET,
-        logging.WARNING: BOLD + "[{asctime}] " + YELLOW + "[{levelname}] " + RESET + "{name}: {message}" + RESET,
-        logging.ERROR: BOLD + "[{asctime}] " + RED + "[{levelname}] " + RESET + "{name}: {message}" + RESET,
-        logging.CRITICAL: BOLD + "[{asctime}] " + RED_BOLD + "[{levelname}] " + RESET + "{name}: {message}" + RESET,
-    }
+        self.FORMATS = {
+            logging.DEBUG: BOLD + GRAY + "{asctime} " + RESET + CYAN + "{levelname} " + RESET + "{name}: {message}" + RESET,
+            logging.INFO: BOLD + GRAY + "{asctime} " + RESET + GREEN + "{levelname} " + RESET + "{name}: {message}" + RESET,
+            logging.WARNING: BOLD + GRAY + "{asctime} " + RESET + YELLOW + "{levelname} " + RESET + "{name}: {message}" + RESET,
+            logging.ERROR: BOLD + GRAY + "{asctime} " + RESET + RED + "{levelname} " + RESET + "{name}: {message}" + RESET,
+            logging.CRITICAL: BOLD + GRAY + "{asctime} " + RESET + RED_BOLD + "{levelname} " + RESET + "{name}: {message}" + RESET,
+        }
 
     def format(self, record):
         log_fmt = self.FORMATS.get(record.levelno, self.DEFAULT_FMT)
@@ -65,12 +71,14 @@ class SmoothOperators(commands.Bot):
         super().__init__(command_prefix="!", intents=discord.Intents.all())
 
     async def setup_hook(self) -> None:
-        logger.info(f"Beginning ext loading, detected {len(COG_EXTS)} exts")
+        logger.info(f"Beginning extension loading, detected {len(COG_EXTS)} exts...")
+
         for cog in COG_EXTS:
             await self.load_extension(cog)
             logger.info(f"Loaded ext: {cog}")
         await self.tree.sync()
-        logger.info("Synced command tree, exiting ext setup")
+
+        logger.info("Synced command tree, exiting ext setup...")
         return await super().setup_hook()
 
     async def on_ready(self) -> None:
@@ -78,7 +86,7 @@ class SmoothOperators(commands.Bot):
             activity=discord.Game(name="Searching for Lava Rocks")
         )
         logger.info("Switched status, please change if needed")
-        logger.info(f"Bot is fully running, running at {self.latency}ms")
+        logger.info(f"Bot is fully running; running at {round(self.latency * 1000, 2)}ms")
 
 
 def main() -> None:
