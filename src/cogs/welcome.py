@@ -25,7 +25,7 @@ class Welcome(BaseCog):
             title=f"{member.name} joined the server!",
             timestamp=datetime.datetime.now(tz=ZoneInfo("America/New_York"))
         )
-
+        
         welcome_gif_url = random.choice(self.WELCOME_GIF_URLS)
 
         join_embed.set_author(name=member.name, icon_url=member.display_avatar.url)

@@ -1,0 +1,16 @@
+[core]
+guild =
+bot = 1
+
+[channels]
+lobby =
+logs =
+staff =
+
+[roles]
+subscribers =
+unverified =
+
+[welcome]
+gif_1 =
+gif_2 =
