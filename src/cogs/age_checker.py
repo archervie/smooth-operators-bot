@@ -29,7 +29,7 @@ class JoinChecker(BaseCog):
                 logger.error(
                     f"Missing permissions for giving {member.name} subscriber role; please assign manually."
                 )
-
+                
         create_time = member.created_at
         current_time = datetime.datetime.now(datetime.UTC)
         time_difference = current_time - create_time

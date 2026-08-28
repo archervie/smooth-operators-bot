@@ -103,7 +103,7 @@ class AutoLogger(BaseCog):
                 if (
                     entry.target.id == member.id
                     and (
-                        datetime.datetime.now(datetime.timezone.utc) - entry.created_at
+                        datetime.datetime.now(datetime.UTC) - entry.created_at
                     ).total_seconds()
                     < 10
                 ):
@@ -153,7 +153,7 @@ class AutoLogger(BaseCog):
                 if (
                     entry.target.id == user.id
                     and (
-                        datetime.datetime.now(datetime.timezone.utc) - entry.created_at
+                        datetime.datetime.now(datetime.UTC) - entry.created_at
                     ).total_seconds()
                     < 10
                 ):
@@ -188,7 +188,7 @@ class AutoLogger(BaseCog):
                 if (
                     entry.target.id == user.id
                     and (
-                        datetime.datetime.now(datetime.timezone.utc) - entry.created_at
+                        datetime.datetime.now(datetime.UTC) - entry.created_at
                     ).total_seconds()
                     < 10
                 ):

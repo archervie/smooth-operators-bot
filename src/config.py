@@ -1,11 +1,17 @@
+import logging
+import tomllib
 from pathlib import Path
 
-import tomllib
+logger = logging.getLogger(__name__)
 
-CONFIG_PATH = Path(__file__).parent.parent / "config.toml"
+# Comment test_config for prod
+# CONFIG_PATH = Path(__file__).parent.parent / "config.toml"
+CONFIG_PATH = Path(__file__).parent.parent / "test_config.toml"
+logger.info(f"Loaded config at {CONFIG_PATH}")
 
 
-def config_loader() -> dict:
+def config_loader() -> dict[str, str]:
+    config = {}
     with open(CONFIG_PATH, mode="rb") as f:
-        config = tomllib.load(f)
+        config: dict[str, str] = tomllib.load(f)
     return config

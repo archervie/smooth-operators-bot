@@ -1,12 +1,15 @@
 import logging
 import sys
+import typing
 from logging.handlers import RotatingFileHandler
 
 
+@typing.final
 class ColoredFormatter(logging.Formatter):
     """Custom logging formatter that adds ANSI color codes based on log level."""
 
     def __init__(self) -> None:
+        super().__init__()
         GRAY = "\x1b[38;20m"
         CYAN = "\x1b[36;20m"
         GREEN = "\x1b[32;20m"
@@ -66,7 +69,8 @@ class ColoredFormatter(logging.Formatter):
             + RESET,
         }
 
-    def format(self, record):
+    @typing.override
+    def format(self, record: logging.LogRecord):
         log_fmt = self.FORMATS.get(record.levelno, self.DEFAULT_FMT)
         formatter = logging.Formatter(log_fmt, datefmt="%Y-%m-%d %H:%M:%S", style="{")
         return formatter.format(record)

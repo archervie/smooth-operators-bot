@@ -1,6 +1,7 @@
 import logging
 import os
 from pathlib import Path
+from typing import override
 
 import discord
 from discord.ext import commands
@@ -9,7 +10,7 @@ from dotenv import load_dotenv
 from config import config_loader
 from logger import setup_logging
 
-COG_EXTS = ["cogs.autolog", "cogs.join_checker", "cogs.welcome"]
+COG_EXTS = ["cogs.auto_logger", "cogs.age_checker", "cogs.join_manager"]
 CONFIGS = config_loader()
 DOTENV_PATH = Path(__file__).parent.parent / ".env"
 
@@ -33,6 +34,7 @@ class SmoothOperators(commands.Bot):
             help_command=commands.DefaultHelpCommand(),
         )
 
+    @override
     async def setup_hook(self) -> None:
         logger.info(
             f"Beginning extension loading, detected {len(COG_EXTS)} extensions..."
@@ -44,7 +46,7 @@ class SmoothOperators(commands.Bot):
             await self.load_extension(cog)
             logger.info(f"Loaded ext: {cog}...")
 
-        await self.tree.sync()
+        _ = await self.tree.sync()
         logger.info("Synced command tree, exiting ext setup...")
         return await super().setup_hook()
 
@@ -68,16 +70,19 @@ def main() -> None:
     # Currently using .env files for testing and development
     # purposes, replace with doppler eventually
     # Uncomment the line below for testing
-    if CONFIGS["core"]["bot"] == 1:
+    if CONFIGS["core"]["bot"]:
+        logger.warning("Running TEST version of bot")
         bot.run(
-            token=os.environ["TOKEN"],
+            token=os.environ["TEST_TOKEN"],
             reconnect=True,
             log_handler=None,
             root_logger=True,
         )
+
     else:
+        logger.info("Running prod version of bot")
         bot.run(
-            token=os.environ["TEST_TOKEN"],
+            token=os.environ["TOKEN"],
             reconnect=True,
             log_handler=None,
             root_logger=True,
