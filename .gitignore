@@ -222,3 +222,4 @@ database/
 
 # Config
 config.toml
+test_config.toml
