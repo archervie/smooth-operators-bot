@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.14%2B-blue)](#)
 
-A Discord bot developed specifically for use in the Jojodoss Discord server.
+A security-focused Discord application developed specifically for use in the Jojodoss Discord server.
 
 [Join the Server](https://discord.gg/nGWnJsj58q)
 
@@ -12,28 +12,28 @@ A Discord bot developed specifically for use in the Jojodoss Discord server.
 
 ## Overview
 
-Smooth Operators, developed through discord.py, is built for the Jojodoss Discord server, inspired by the stand Smooth Operators from the Jojo's Bizarre Adventure series. This bot is primarily aimed toward server security and overall community management.
+Smooth Operators, developed through `discord.py`, is a Discord application that is inspired by the stand Smooth Operators from the Jojo's Bizarre Adventure series. It is primarily made for server security and safety.
 
-> **Note:** You are free to use this repository as a template for your own server, but keep in mind that several features are tailored specifically for the Jojodoss server and may require modification.
+> **Note:** You are free to use this repository as a template for your own server, but keep in mind that several features are tailored specifically for the Jojodoss server and may require modification for your own server. Additionally, this bot is primarily built for *ONE* server, not for many at once. This affects the behavior of certain cogs, such as spam prevention and logging automation.
 
 **Key Features**
 
 - Account Age Gate: Automatically times out accounts less than four months old.
 - Verification: Accompanied by the age gate, a timed out user can verify their account at any time.
 - Automation: Automates logging, member joins/leaves, and moderation.
-- Activity Leveling: Tracks message counts to gain levels to gain special roles.
+- Spam Prevention: Automated message checking that detects spam across many channels in close intervals.
 
 ---
 
 ## Prerequisites
 
-If you wish to use this bot as a template for your server, you must have the following set up:
+If you wish to use this application as a template for your own server, you must have the following set up:
 
 - Python 3.14+
 - Git
-- Discord bot set up through the Discord Developer Portal
+- A Discord application set up through the [Discord developer portal](https://discord.com/developers/applications)
 
-This bot will need privileged gateway intents (Server Members & Message Content) enabled to function.
+ :warning: This bot will need privileged gateway intents (Server Members & Message Content) enabled to function.
 
 ## Installation
 
