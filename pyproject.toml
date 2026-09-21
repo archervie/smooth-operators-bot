@@ -1,6 +1,6 @@
 [project]
 name = "smooth-operators"
-version = "0.0.4"
+version = "0.1.0"
 description = "A Discord bot developed for use in the Jojodoss Discord server."
 authors = [
     {name = "archervie",email = "archervie@proton.me"}

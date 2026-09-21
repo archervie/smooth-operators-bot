@@ -14,7 +14,7 @@ A security-focused Discord application developed specifically for use in the Joj
 
 Smooth Operators, developed through `discord.py`, is a Discord application that is inspired by the stand Smooth Operators from the Jojo's Bizarre Adventure series. It is primarily made for server security and safety.
 
-> **Note:** You are free to use this repository as a template for your own server, but keep in mind that several features are tailored specifically for the Jojodoss server and may require modification for your own server. Additionally, this bot is primarily built for *ONE* server, not for many at once. This affects the behavior of certain cogs, such as spam prevention and logging automation.
+> **Note:** You are free to use this repository as a template for your own server, but keep in mind that several features are tailored specifically for the Jojodoss server and may require modification for your own server. Additionally, this bot is primarily built for _ONE_ server, not for many at once. This affects the behavior of certain cogs, such as spam prevention and logging automation.
 
 **Key Features**
 
@@ -33,7 +33,7 @@ If you wish to use this application as a template for your own server, you must 
 - Git
 - A Discord application set up through the [Discord developer portal](https://discord.com/developers/applications)
 
- :warning: This bot will need privileged gateway intents (Server Members & Message Content) enabled to function.
+:warning: This bot will need privileged gateway intents (Server Members & Message Content) enabled to function.
 
 ## Installation
 

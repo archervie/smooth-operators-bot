@@ -2,7 +2,6 @@ import datetime
 import logging
 
 import discord
-from discord import app_commands
 from discord.ext import commands
 
 from core.base_cog import BaseCog
@@ -14,7 +13,6 @@ class JoinChecker(BaseCog):
     def __init__(self, bot: commands.Bot) -> None:
         super().__init__(bot)
 
-    @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member) -> None:
 
@@ -29,7 +27,7 @@ class JoinChecker(BaseCog):
                 logger.error(
                     f"Missing permissions for giving {member.name} subscriber role; please assign manually."
                 )
-                
+
         create_time = member.created_at
         current_time = datetime.datetime.now(datetime.UTC)
         time_difference = current_time - create_time
@@ -71,7 +69,6 @@ class JoinChecker(BaseCog):
                         "Please keep this in mind, and act accordingly."
                     )
 
-    @app_commands.allowed_contexts(guilds=False, dms=True, private_channels=False)
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
         if message.content == "jojodoss verify" and isinstance(
