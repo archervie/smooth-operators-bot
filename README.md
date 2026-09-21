@@ -4,9 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.14%2B-blue)](#)
 
-A security-focused Discord application developed specifically for use in the Jojodoss Discord server.
-
-[Join the Server](https://discord.gg/nGWnJsj58q)
+A security-focused Discord application developed specifically for use in the [Jojodoss Discord server.](<(https://discord.gg/nGWnJsj58q)>)
 
 ---
 
