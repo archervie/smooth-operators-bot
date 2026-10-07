@@ -1,3 +1,5 @@
+# type: ignore
+
 import asyncio
 import datetime
 import logging
@@ -61,25 +63,6 @@ class AutoLogger(BaseCog):
         embed.set_author(
             name=before.author.name, icon_url=before.author.display_avatar.url
         )
-
-        if isinstance(self.LOG_CHANNEL, discord.TextChannel):
-            await self.LOG_CHANNEL.send(embed=embed)
-        else:
-            logger.error(
-                f"Log channel is not TextChannel, please fix: {self.LOG_CHANNEL}"
-            )
-
-    @commands.Cog.listener()
-    async def on_member_join(self, member: discord.Member) -> None:
-        logger.info(f"{member.name} has joined the server")
-
-        embed = discord.Embed(
-            color=discord.Color.green(),
-            description=f"{member.mention} has joined the server",
-            title="Member Joined",
-            timestamp=datetime.datetime.now(tz=ZoneInfo("America/New_York")),
-        )
-        embed.set_author(name=member.name, icon_url=member.display_avatar.url)
 
         if isinstance(self.LOG_CHANNEL, discord.TextChannel):
             await self.LOG_CHANNEL.send(embed=embed)

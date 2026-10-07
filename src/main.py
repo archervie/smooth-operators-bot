@@ -1,7 +1,6 @@
 import logging
 import os
 from pathlib import Path
-from typing import override
 
 import discord
 from discord.ext import commands
@@ -10,7 +9,7 @@ from dotenv import load_dotenv
 from config import config_loader
 from logger import setup_logging
 
-COG_EXTS = ["cogs.auto_logger", "cogs.age_checker", "cogs.join_manager"]
+COG_EXTS = ["cogs.auto_logger", "cogs.join_manager"]
 CONFIGS = config_loader()
 DOTENV_PATH = Path(__file__).parent.parent / ".env"
 
@@ -20,21 +19,15 @@ logger = logging.getLogger(__name__)
 
 
 class SmoothOperators(commands.Bot):
-    """
-    Bot class for SmoothOperators
-    """
-
     def __init__(self) -> None:
         # This bot uses app commands, so the prefix isn't used
-        intents = discord.Intents.default()
-        intents.message_content = True
+        intents = discord.Intents.all()
         super().__init__(
             command_prefix="!",
             intents=intents,
             help_command=commands.DefaultHelpCommand(),
         )
 
-    @override
     async def setup_hook(self) -> None:
         logger.info(
             f"Beginning extension loading, detected {len(COG_EXTS)} extensions..."
@@ -44,10 +37,10 @@ class SmoothOperators(commands.Bot):
 
         for cog in COG_EXTS:
             await self.load_extension(cog)
-            logger.info(f"Loaded ext: {cog}...")
+            logger.info(f"Loaded extension: {cog}...")
 
         _ = await self.tree.sync()
-        logger.info("Synced command tree, exiting ext setup...")
+        logger.info("Synced command tree, exiting extension setup...")
         return await super().setup_hook()
 
     async def on_ready(self) -> None:
@@ -56,21 +49,15 @@ class SmoothOperators(commands.Bot):
         )
         logger.info("Switched status, please change if needed")
         logger.info(
-            f"Bot is fully running; running at {round(self.latency * 1000, 2)}ms"
+            f"Smooth Operators is up; running at {round(self.latency * 1000, 2)}ms"
         )
 
 
 def main() -> None:
-    """
-    Run the core bot.
-    """
-
     bot = SmoothOperators()
 
-    # Currently using .env files for testing and development
-    # purposes, replace with doppler eventually
-    # Uncomment the line below for testing
-    if CONFIGS["core"]["bot"]:
+    # In config; bot = 0 for prod, bot = 1 for test
+    if CONFIGS["core"]["bot"]: # type: ignore
         logger.warning("Running TEST version of bot")
         bot.run(
             token=os.environ["TEST_TOKEN"],

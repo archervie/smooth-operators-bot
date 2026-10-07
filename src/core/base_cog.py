@@ -1,3 +1,5 @@
+# type: ignore
+
 import logging
 
 import discord
@@ -46,11 +48,3 @@ class BaseCog(commands.Cog):
     @property
     def UNVERIFIED(self) -> discord.Object:
         return discord.Object(self.config["roles"]["unverified"])
-
-    @property
-    def WELCOME_GIF_URLS(self) -> list:
-        welcome_gifs = [
-            self.config["welcome"]["gif_1"],
-            self.config["welcome"]["gif_2"],
-        ]
-        return welcome_gifs

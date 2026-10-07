@@ -101,7 +101,7 @@ ipython_config.py
 # uv.lock
 
 # poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   Similar to Pipfile.lock, it is generaCONFIG_PATH = Path(__file__).parent.parent / "test_config.toml"lly recommended to include poetry.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
 #   commonly ignored for libraries.
 #   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
@@ -223,3 +223,8 @@ database/
 # Config
 config.toml
 test_config.toml
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

@@ -1,6 +1,6 @@
 [core]
 guild =
-bot = 1
+bot = 0
 
 [channels]
 lobby =
@@ -10,7 +10,3 @@ staff =
 [roles]
 subscribers =
 unverified =
-
-[welcome]
-gif_1 =
-gif_2 =

@@ -1,20 +1,20 @@
 [project]
-name = "smooth-operators"
+name = "smooth-operators-bot"
 version = "0.1.0"
-description = "A Discord bot developed for use in the Jojodoss Discord server."
-authors = [
-    {name = "archervie",email = "archervie@proton.me"}
-]
-license = "MIT"
+description = "Add your description here"
 readme = "README.md"
+authors = [
+    { name = "archervie", email = "archervie@proton.me" }
+]
 requires-python = ">=3.14"
 dependencies = [
-    "discord-py (>=2.7.1,<3.0.0)",
-    "dotenv (>=0.9.9,<0.10.0)",
-    "aiosqlite (>=0.22.1,<0.23.0)"
+    "discord-py>=2.7.1",
+    "dotenv>=0.9.9",
 ]
 
+[project.scripts]
+smooth-operators-bot = "smooth_operators_bot:main"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
