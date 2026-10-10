@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY
 );
+
+CREATE INDEX IF NOT EXISTS idx_users_xp ON users (xp_gained DESC);
 """
 
 
