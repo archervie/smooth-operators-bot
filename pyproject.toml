@@ -1,20 +1,21 @@
 [project]
 name = "smooth-operators-bot"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.2"
+description = "A custom Discord bot developed for the Jojodoss Discord server."
 readme = "README.md"
 authors = [
     { name = "archervie", email = "archervie@proton.me" }
 ]
 requires-python = ">=3.14"
 dependencies = [
+    "aiosqlite>=0.22.1",
     "discord-py>=2.7.1",
     "dotenv>=0.9.9",
 ]
 
-[project.scripts]
-smooth-operators-bot = "smooth_operators_bot:main"
-
 [build-system]
 requires = ["uv_build>=0.12.23,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv]
+package = false
