@@ -39,7 +39,6 @@ class JoinManager(BaseCog):
                 f"Log channel is not TextChannel, please fix: {self.LOG_CHANNEL}"
             )
 
-
         try:
             await member.add_roles(self.SUBSCRIBERS, reason="Joined the server.")
             logger.info(f"Granted {member.name} the subscribers role")
@@ -52,8 +51,6 @@ class JoinManager(BaseCog):
                     f"Missing permissions for giving {member.name} subscriber role; please assign manually."
                 )
 
-
-
         join_embed = discord.Embed(
             color=member.roles[0].color,
             description="Hello! Make sure to get roles in the roles channel.",
@@ -63,7 +60,7 @@ class JoinManager(BaseCog):
 
         welcome_gifs = [
             "https://i.imgur.com/NDBNYKh.gif",
-            "https://i.imgur.com/vNsTQS1.gif"
+            "https://i.imgur.com/vNsTQS1.gif",
         ]
 
         welcome_gif_url = random.choice(welcome_gifs)
@@ -121,11 +118,10 @@ class JoinManager(BaseCog):
                         "Please keep this in mind, and act accordingly."
                     )
 
-
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
         if message.content == "jojodoss verify" and isinstance(
-            self.GUILD, discord.Guild
+            message.channel, discord.DMChannel and isinstance(self.GUILD, discord.GUILD)
         ):
             member = self.GUILD.get_member(message.author.id)
 

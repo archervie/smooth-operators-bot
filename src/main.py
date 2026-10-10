@@ -10,7 +10,12 @@ from config import config_loader
 from database import init_db
 from logger import setup_logging
 
-COG_EXTS = ["cogs.auto_logger", "cogs.join_manager", "cogs.profile_manager"]
+COG_EXTS = [
+    "cogs.auto_logger",
+    "cogs.join_manager",
+    "cogs.profile_manager",
+    "cogs.leveling_manager",
+]
 CONFIGS = config_loader()
 DOTENV_PATH = Path(__file__).parent.parent / ".env"
 

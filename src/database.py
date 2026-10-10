@@ -9,11 +9,8 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
     level INTEGER NOT NULL DEFAULT 1,
-    xp_gained INTEGER NOT NULL DEFAULT 0
-);
-
-CREATE TABLE IF NOT EXISTS messages (
-    id INTEGER PRIMARY KEY
+    xp_gained INTEGER NOT NULL DEFAULT 0,
+    title TEXT NOT NULL DEFAULT 'Subscriber'
 );
 
 CREATE INDEX IF NOT EXISTS idx_users_xp ON users (xp_gained DESC);
