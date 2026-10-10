@@ -228,3 +228,8 @@ test_config.toml
 .flaskenv*
 !.env.project
 !.env.vault
+
+# Database
+*.db
+*.db-shm
+*.db-wal

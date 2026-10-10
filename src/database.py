@@ -1,5 +1,8 @@
+import logging
+
 import aiosqlite
 
+logger = logging.getLogger(__name__)
 DB_NAME = "database.db"
 
 SCHEMA = """
@@ -21,4 +24,4 @@ async def init_db():
     async with aiosqlite.connect(DB_NAME) as db:
         await db.executescript(SCHEMA)
         await db.commit()
-    print(f"Database initialized as {DB_NAME}")
+    logger.info(f"Database initialized as {DB_NAME}")

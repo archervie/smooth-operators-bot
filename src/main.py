@@ -7,13 +7,15 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from config import config_loader
+from database import init_db
 from logger import setup_logging
 
-COG_EXTS = ["cogs.auto_logger", "cogs.join_manager"]
+COG_EXTS = ["cogs.auto_logger", "cogs.join_manager", "cogs.profile_manager"]
 CONFIGS = config_loader()
 DOTENV_PATH = Path(__file__).parent.parent / ".env"
 
 setup_logging()
+
 load_dotenv(dotenv_path=DOTENV_PATH)
 logger = logging.getLogger(__name__)
 
@@ -29,6 +31,9 @@ class SmoothOperators(commands.Bot):
         )
 
     async def setup_hook(self) -> None:
+        logger.info("Beginning database initialization")
+        await init_db()
+
         logger.info(
             f"Beginning extension loading, detected {len(COG_EXTS)} extensions..."
         )
@@ -57,7 +62,7 @@ def main() -> None:
     bot = SmoothOperators()
 
     # In config; bot = 0 for prod, bot = 1 for test
-    if CONFIGS["core"]["bot"]: # type: ignore
+    if CONFIGS["core"]["bot"]:  # type: ignore
         logger.warning("Running TEST version of bot")
         bot.run(
             token=os.environ["TEST_TOKEN"],
