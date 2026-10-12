@@ -43,7 +43,7 @@ class ProfileManager(BaseGroupCog, name="profile"):
 
         if not user_profile:
             await interaction.response.send_message(
-                "Profile does not exist.", ephemeral=True
+                "Profile does not exist. Please do /profile init to initialize your profile", ephemeral=True
             )
             return
 

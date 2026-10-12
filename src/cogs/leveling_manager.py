@@ -27,11 +27,11 @@ class LevelingManager(BaseGroupCog):
         if leveled_up:
             embed = discord.Embed(
                 color=discord.Color.green(),
-                description=f"{message.author.name} leveled up to {leveled_up['new_level']}!",
+                description=f"{message.author.name} leveled up to level {leveled_up['new_level']}!",
                 title="Level Up!",
                 timestamp=datetime.datetime.now(tz=ZoneInfo("America/New_York")),
             )
-            logger.info(f"{message.author.name} leveled up to {leveled_up['new_level']}")
+            logger.info(f"{message.author.name} leveled up to level {leveled_up['new_level']}")
 
             embed.set_thumbnail(url=message.author.display_avatar.url)
             await message.channel.send(embed=embed)

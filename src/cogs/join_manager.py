@@ -53,7 +53,7 @@ class JoinManager(BaseCog):
 
         join_embed = discord.Embed(
             color=member.roles[0].color,
-            description="Hello! Make sure to get roles in the roles channel.",
+            description="Hello! Make sure to get roles in the roles channel. Please initialize your profile with /profile init!",
             title=f"Member {member_num}: {member.name} has joined the server!",
             timestamp=datetime.datetime.now(tz=ZoneInfo("America/New_York")),
         )
