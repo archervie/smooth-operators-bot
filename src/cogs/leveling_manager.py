@@ -31,9 +31,29 @@ class LevelingManager(BaseGroupCog):
                 title="Level Up!",
                 timestamp=datetime.datetime.now(tz=ZoneInfo("America/New_York")),
             )
+            logger.info(f"{message.author.name} leveled up to {leveled_up['new_level']}")
 
             embed.set_thumbnail(url=message.author.display_avatar.url)
             await message.channel.send(embed=embed)
+
+            if leveled_up["old_title"] != leveled_up["new_title"]:
+                if message.guild:
+                    member = await message.guild.fetch_member(message.author.id)
+                else:
+                    logger.error(f"Unable to fetch guild of message of ID {message.id}")
+                    return
+
+                if isinstance(member, discord.Member):
+                    match leveled_up["new_title"]:
+                        case "Hamon User":
+                            await member.add_roles(self.TIER_1)
+                        case "Stand User":
+                            await member.add_roles(self.TIER_2)
+                        case "Joestar":
+                            await member.add_roles(self.TIER_3)
+
+                logger.info(f"Provided {message.author} with {leveled_up['new_title']} role")
+
 
 
 async def setup(bot: commands.Bot) -> None:

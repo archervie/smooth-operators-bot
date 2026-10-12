@@ -1,3 +1,5 @@
+# type: ignore
+
 import logging
 
 import aiosqlite
@@ -19,6 +21,18 @@ class BaseGroupCog(commands.GroupCog):
     @property
     def GUILD(self) -> discord.Guild | None:
         return self.bot.get_guild(self.config["core"]["guild"])
+
+    @property
+    def TIER_1(self) -> discord.Object:
+        return discord.Object(self.config["roles"]["tier_1"])
+
+    @property
+    def TIER_2(self) -> discord.Object:
+        return discord.Object(self.config["roles"]["tier_2"])
+
+    @property
+    def TIER_3(self) -> discord.Object:
+        return discord.Object(self.config["roles"]["tier_3"])
 
     @staticmethod
     def get_xp_needed(level: int) -> int:
@@ -93,6 +107,7 @@ class BaseGroupCog(commands.GroupCog):
 
         current_level = user["level"]
         current_xp = user["xp_gained"]
+        old_title = self.get_title_for_level(current_level)
         starting_level = current_level
 
         while True:
@@ -119,7 +134,8 @@ class BaseGroupCog(commands.GroupCog):
         return {
             "old_level": starting_level,
             "new_level": current_level,
-            "title": new_title,
+            "old_title": old_title,
+            "new_title": new_title,
             "xp_remaining": current_xp,
             "xp_next_level": self.get_xp_needed(current_level),
         }
