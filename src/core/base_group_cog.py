@@ -51,7 +51,6 @@ class BaseGroupCog(commands.GroupCog):
     async def cog_load(self) -> None:
         self.db = await aiosqlite.connect(self.db_name)
         self.db.row_factory = aiosqlite.Row
-        await self.db.execute("PRAGMA journal_mode=WAL;")
 
     async def cog_unload(self) -> None:
         if self.db:
