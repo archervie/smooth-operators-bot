@@ -33,7 +33,7 @@ class ProfileManager(BaseGroupCog, name="profile"):
 
     @app_commands.command(description="View a user's profile", name="view")
     async def profile_view(
-        self, interaction: discord.Interaction, user: discord.User = None
+        self, interaction: discord.Interaction, user: discord.User | discord.Member | None = None
     ) -> None:
         if not user:
             user = interaction.user
@@ -45,6 +45,7 @@ class ProfileManager(BaseGroupCog, name="profile"):
             await interaction.response.send_message(
                 "Profile does not exist.", ephemeral=True
             )
+            return
 
         embed = discord.Embed(
             color=discord.Color.blue(),

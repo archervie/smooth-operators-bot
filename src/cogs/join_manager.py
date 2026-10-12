@@ -121,8 +121,7 @@ class JoinManager(BaseCog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
         if message.content == "jojodoss verify" and isinstance(
-            message.channel, discord.DMChannel and isinstance(self.GUILD, discord.GUILD)
-        ):
+            message.channel, discord.DMChannel) and isinstance(self.GUILD, discord.Guild):
             member = self.GUILD.get_member(message.author.id)
 
             if (
