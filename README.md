@@ -9,7 +9,6 @@ A security-focused Discord application developed specifically for use in the [Jo
 ---
 
 ## Overview
-
 Smooth Operators, developed through `discord.py`, is a Discord application that is inspired by the stand Smooth Operators from the Jojo's Bizarre Adventure series. It is primarily made for server security and safety.
 
 > **Note:** You are free to use this repository as a template for your own server, but keep in mind that several features are tailored specifically for the Jojodoss server and may require modification for your own server. Additionally, this bot is primarily built for _ONE_ server, not for many at once. This affects the behavior of certain cogs, such as spam prevention and logging automation.
@@ -20,6 +19,7 @@ Smooth Operators, developed through `discord.py`, is a Discord application that 
 - Verification: Accompanied by the age gate, a timed out user can verify their account at any time.
 - Automation: Automates logging, member joins/leaves, and moderation.
 - Spam Prevention: Automated message checking that detects spam across many channels in close intervals.
+- Leveling: Automatic leveling system with role perks through a SQLite database.
 
 ---
 
