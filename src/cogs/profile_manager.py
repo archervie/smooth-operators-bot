@@ -17,20 +17,6 @@ class ProfileManager(BaseGroupCog, name="profile"):
     def __init__(self, bot: commands.Bot) -> None:
         super().__init__(bot)
 
-    @app_commands.command(description="Initialize your profile", name="init")
-    async def profile_init(self, interaction: discord.Interaction) -> None:
-        id = interaction.user.id
-        user_added = await self.add_user_to_db(id)
-        if user_added:
-            await interaction.response.send_message(
-                "Your profile has been successfully initialized! Use /profile view to view your profile.",
-                ephemeral=True,
-            )
-        else:
-            await interaction.response.send_message(
-                "Your profile has already been initialized.", ephemeral=True
-            )
-
     @app_commands.command(description="View a user's profile", name="view")
     async def profile_view(
         self, interaction: discord.Interaction, user: discord.User | discord.Member | None = None

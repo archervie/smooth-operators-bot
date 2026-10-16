@@ -19,7 +19,8 @@ class LevelingManager(BaseGroupCog):
     async def on_message(self, message: discord.Message) -> None:
         user_profile = await self.get_user_from_db(message.author.id)
         if not user_profile:
-            return
+            await self.add_user_to_db(message.author.id)
+            user_profile = await self.get_user_from_db(message.author.id)
 
         xp_amount = random.randrange(15, 25)
         await self.add_xp(message.author.id, xp_amount)

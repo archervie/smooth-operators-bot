@@ -65,25 +65,13 @@ class SmoothOperators(commands.Bot):
 
 def main() -> None:
     bot = SmoothOperators()
-
-    # In config; bot = 0 for prod, bot = 1 for test
-    if CONFIGS["core"]["bot"]:  # type: ignore
-        logger.warning("Running TEST version of bot")
-        bot.run(
-            token=os.environ["TEST_TOKEN"],
-            reconnect=True,
-            log_handler=None,
-            root_logger=True,
-        )
-
-    else:
-        logger.info("Running prod version of bot")
-        bot.run(
-            token=os.environ["TOKEN"],
-            reconnect=True,
-            log_handler=None,
-            root_logger=True,
-        )
+    logger.info("Running prod version of bot")
+    bot.run(
+        token=os.environ["TOKEN"],
+        reconnect=True,
+        log_handler=None,
+        root_logger=True,
+    )
 
 
 if __name__ == "__main__":
