@@ -17,6 +17,10 @@ class LevelingManager(BaseGroupCog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
+
+        if message.author.bot:
+            return
+        
         user_profile = await self.get_user_from_db(message.author.id)
         if not user_profile:
             await self.add_user_to_db(message.author.id)
