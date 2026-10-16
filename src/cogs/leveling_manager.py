@@ -20,10 +20,13 @@ class LevelingManager(BaseGroupCog):
         user_profile = await self.get_user_from_db(message.author.id)
         if not user_profile:
             await self.add_user_to_db(message.author.id)
+            logger.info(f"Added {message.author.name} to the database")
             user_profile = await self.get_user_from_db(message.author.id)
 
         xp_amount = random.randrange(15, 25)
         await self.add_xp(message.author.id, xp_amount)
+        logger.info(f"Gave {xp_amount} xp to {message.author.name}")
+
         leveled_up = await self.check_and_apply_level_up(message.author.id)
         if leveled_up:
             embed = discord.Embed(

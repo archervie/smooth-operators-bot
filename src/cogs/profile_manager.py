@@ -53,6 +53,7 @@ class ProfileManager(BaseGroupCog, name="profile"):
         embed.add_field(name="Total XP Needed", value=total_xp_needed)
 
         await interaction.response.send_message(embed=embed)
+        logger.info(f"{interaction.user.name} requested profile")
 
 
 async def setup(bot: commands.Bot) -> None:

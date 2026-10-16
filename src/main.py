@@ -44,6 +44,7 @@ class SmoothOperators(commands.Bot):
         )
 
         await self.load_extension("core.error_handler")
+        logger.info("Loaded error handler cog...")
 
         for cog in COG_EXTS:
             await self.load_extension(cog)
@@ -65,7 +66,7 @@ class SmoothOperators(commands.Bot):
 
 def main() -> None:
     bot = SmoothOperators()
-    logger.info("Running prod version of bot")
+    logger.info("Running bot...")
     bot.run(
         token=os.environ["TOKEN"],
         reconnect=True,
