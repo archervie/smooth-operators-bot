@@ -61,6 +61,7 @@ class JoinManager(BaseCog):
         welcome_gifs = [
             "https://i.imgur.com/NDBNYKh.gif",
             "https://i.imgur.com/vNsTQS1.gif",
+            "https://i.imgur.com/HoS97XZ.gif",
         ]
 
         welcome_gif_url = random.choice(welcome_gifs)
@@ -120,8 +121,11 @@ class JoinManager(BaseCog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
-        if message.content == "jojodoss verify" and isinstance(
-            message.channel, discord.DMChannel) and isinstance(self.GUILD, discord.Guild):
+        if (
+            message.content == "jojodoss verify"
+            and isinstance(message.channel, discord.DMChannel)
+            and isinstance(self.GUILD, discord.Guild)
+        ):
             member = self.GUILD.get_member(message.author.id)
 
             if (
